@@ -8,6 +8,7 @@ buildscript {
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 	}
+
 }
 
 apply plugin: 'java'
@@ -22,6 +23,8 @@ repositories {
 }
 
 
+
+
 dependencies {
    	compile("org.springframework.boot:spring-boot-starter-actuator")
     compile("org.springframework.boot:spring-boot-starter-web")
@@ -30,5 +33,11 @@ dependencies {
 	compile("org.springframework.boot:spring-boot-starter-security")
     compile("com.h2database:h2")
 	compile('org.springframework.boot:spring-boot-starter')
+	compile('org.springframework.boot:spring-boot-starter-log4j')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+
+}
+
+configurations {
+    all*.exclude module : 'spring-boot-starter-logging'
 }
