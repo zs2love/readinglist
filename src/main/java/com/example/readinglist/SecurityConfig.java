@@ -32,8 +32,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/").access("hasRole('READER')").antMatchers("/**").permitAll().and()
-				.formLogin().loginPage("/login").failureUrl("/login?error=true");
+		
+		http
+        .authorizeRequests()
+            .antMatchers("/", "/home").permitAll()
+            .anyRequest().access("hasRole('READER')")
+            .and()
+        .formLogin()
+            .loginPage("/login").failureUrl("/login?error=true")
+            .permitAll()
+            .and()
+        .logout()
+            .permitAll();
 	}
 
 	@Override
@@ -42,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 			@Override
 			public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-				logger.info("User Name for login is: {0}", username);
+				logger.info("User Name for login is: {}", username);
 				return readerRepository.findOne(username);
 			}
 		});

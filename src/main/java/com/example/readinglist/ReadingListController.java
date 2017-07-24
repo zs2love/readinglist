@@ -14,21 +14,17 @@ public class ReadingListController {
 
 	private static final String reader = "craig";
 
-	
 	private AmazonProperties amazonProps;
-	
+
 	private ReadingListRepository readingListRepository;
 
-	
-	
 	@Autowired
 	public ReadingListController(AmazonProperties amazonProps, ReadingListRepository readingListRepository) {
 		this.amazonProps = amazonProps;
 		this.readingListRepository = readingListRepository;
 	}
 
-
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping( path = "/readingList", method = RequestMethod.GET)
 	public String readersBooks(Model model) {
 
 		List<Book> readingList = readingListRepository.findByReader(reader);
@@ -40,12 +36,11 @@ public class ReadingListController {
 		return "readingList";
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(path = "/readingList",method = RequestMethod.POST)
 	public String addToReadingList(Book book) {
 		book.setReader(reader);
 		readingListRepository.save(book);
 		return "redirect:/";
 	}
-
 
 }
