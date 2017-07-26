@@ -31,3 +31,5 @@ CREATE TABLE `reader` (
 -- ----------------------------
 INSERT INTO `reader` VALUES ('john.doe', 'john', '123456');
 INSERT INTO `reader` VALUES ('user.test', 'user', '123456');
+
+
