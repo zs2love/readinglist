@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.example.readinglist;
+package com.example.readinglist.entity;
 
 import java.util.Arrays;
 import java.util.Collection;

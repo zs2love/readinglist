@@ -1,4 +1,4 @@
-package com.example.readinglist;
+package com.example.readinglist.controller;
 
 import java.util.List;
 
@@ -9,6 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.example.readinglist.config.AmazonProperties;
+import com.example.readinglist.entity.Book;
+import com.example.readinglist.repository.ReadingListRepository;
 
 @Controller
 @RequestMapping("/")

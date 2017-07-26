@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.example.readinglist.ReaderRepository;
+import com.example.readinglist.repository.ReaderRepository;
 
 /**
  * @author shuai.b.zhang
