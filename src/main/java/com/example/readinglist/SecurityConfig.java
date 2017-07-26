@@ -3,8 +3,6 @@
  */
 package com.example.readinglist;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -12,9 +10,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import com.example.readinglist.service.ReaderInfoService;
 
 /**
  * @author shuai.b.zhang
@@ -26,10 +23,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 	@Autowired
-	private ReaderRepository readerRepository;
-
+	private ReaderInfoService readerinfoService;
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
@@ -37,24 +33,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
             .antMatchers("/", "/home").permitAll()
             .anyRequest().access("hasRole('READER')")
+            .anyRequest().authenticated()
             .and()
         .formLogin()
-            .loginPage("/login").failureUrl("/login?error=true")
+            .loginPage("/login").defaultSuccessUrl("/loginuser").usernameParameter("username1")
+            .failureUrl("/login?error=true")
             .permitAll()
             .and()
         .logout()
             .permitAll();
 	}
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(new UserDetailsService() {
-
-			@Override
-			public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-				logger.info("User Name for login is: {}", username);
-				return readerRepository.findOne(username);
-			}
-		});
-	}
+	@Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		
+        auth
+            .userDetailsService(readerinfoService);
+    }
 }

@@ -2,6 +2,8 @@ package com.example.readinglist;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,13 +20,15 @@ public class ReadingListController {
 
 	private ReadingListRepository readingListRepository;
 
+	private static final Logger logger = LoggerFactory.getLogger(ReadingListController.class);
+
 	@Autowired
 	public ReadingListController(AmazonProperties amazonProps, ReadingListRepository readingListRepository) {
 		this.amazonProps = amazonProps;
 		this.readingListRepository = readingListRepository;
 	}
 
-	@RequestMapping( path = "/readingList", method = RequestMethod.GET)
+	@RequestMapping(path = "/readingList", method = RequestMethod.GET)
 	public String readersBooks(Model model) {
 
 		List<Book> readingList = readingListRepository.findByReader(reader);
@@ -36,11 +40,17 @@ public class ReadingListController {
 		return "readingList";
 	}
 
-	@RequestMapping(path = "/readingList",method = RequestMethod.POST)
+	@RequestMapping(path = "/readingList", method = RequestMethod.POST)
 	public String addToReadingList(Book book) {
 		book.setReader(reader);
 		readingListRepository.save(book);
 		return "redirect:/";
+	}
+
+	@RequestMapping(path = "/loginuser",method = RequestMethod.GET)
+	public String loginuser() {
+		logger.info("directing to home page.");
+		return "redirect:/home";
 	}
 
 }
