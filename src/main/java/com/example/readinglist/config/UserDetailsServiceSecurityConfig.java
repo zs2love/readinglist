@@ -18,10 +18,10 @@ import com.example.readinglist.service.ReaderInfoService;
  *
  */
 
-@Profile("development")
+@Profile("production")
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class UserDetailsServiceSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private ReaderInfoService readerinfoService;

@@ -32,4 +32,25 @@ CREATE TABLE `reader` (
 INSERT INTO `reader` VALUES ('john.doe', 'john', '123456');
 INSERT INTO `reader` VALUES ('user.test', 'user', '123456');
 
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for book
+-- ----------------------------
+DROP TABLE IF EXISTS `book`;
+CREATE TABLE `book` (
+  `id` int(36) NOT NULL,
+  `isbn` varchar(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `author` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `reader` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `reader` (`reader`),
+  CONSTRAINT `reader` FOREIGN KEY (`reader`) REFERENCES `reader` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of book
+-- ----------------------------
 
